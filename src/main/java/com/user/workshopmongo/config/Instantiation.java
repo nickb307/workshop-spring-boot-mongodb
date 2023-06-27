@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.user.workshopmongo.domain.Post;
 import com.user.workshopmongo.domain.User;
+import com.user.workshopmongo.dto.AuthorDTO;
 import com.user.workshopmongo.repository.PostRepository;
 import com.user.workshopmongo.repository.UserRepository;
 
@@ -33,14 +34,14 @@ public class Instantiation implements CommandLineRunner {
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo, abraços", maria);
-		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", maria);
 		
-		
-	
-		userRepository.save(maria);
+		userRepository.save(maria); //primeiro salva usuario para terem um id proprio criado pelo bd depois salva os post copiando os dados do autor
 		userRepository.save(bob);
 		userRepository.save(alex);
+		
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo, abraços", new  AuthorDTO (maria));
+		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new  AuthorDTO (maria));
+		
 		postRepository.save(post1);
 		postRepository.save(post2);
 		
